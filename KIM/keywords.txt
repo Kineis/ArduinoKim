@@ -1,0 +1,44 @@
+#######################################
+# Syntax Coloring Map For KIM
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+KIM					KEYWORD1
+RetStatusKIMTypeDef	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+check				KEYWORD2
+set_sleepMode		KEYWORD2
+get_sleepMode		KEYWORD2
+get_ID				KEYWORD2
+get_SN				KEYWORD2
+get_FW				KEYWORD2
+get_PWR				KEYWORD2
+get_BAND			KEYWORD2
+get_FRQ				KEYWORD2
+get_TCXOWU			KEYWORD2
+set_ID				KEYWORD2
+set_SN				KEYWORD2
+set_PWR				KEYWORD2
+set_BAND			KEYWORD2
+set_FRQ				KEYWORD2
+set_TCXOWU			KEYWORD2
+send_data			KEYWORD2
+uint2hexString		KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+RX_KIM				LITERAL1
+TX_KIM				LITERAL1
