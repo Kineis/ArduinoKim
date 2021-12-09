@@ -150,32 +150,34 @@ RetStatusKIMTypeDef KIM::send_ATCommand()
 	while (kimSerial->available() > 0)	//Clean RX buffer
 		kimSerial->read();
 
-    response[0] = '\0';
-
-    kimSerial->print(command);
-
-	for(int i=0; i<10; i++){
+	response[0] = '\0';
+	kimSerial->print(command);
+	for (uint8_t i = 0; i < 10; i++) {
 		uint8_t k = kimSerial->readBytesUntil('\n', response, 20);
 		response[k] = '\0';
-        if((response[0] != '\0') && ( \
-                    response[1] == 'K'	/*OK*/	|| \
-                    response[1] == 'I' /*+ID*/	|| \
-                    response[1] == 'S' /*+SN*/	|| \
-                    response[1] == 'F' /*+FW*/	|| \
-                    response[1] == 'B' /*+BAND*/|| \
-                    response[1] == 'F' /*+FRQ*/	|| \
-                    response[1] == 'P' /*+PWR*/)
-          ){
-            return OK_KIM;
-        }
-        else if (response[0] != '\0' && response[1] == 'R'){   /*ERROR*/
+
+		if((response[0] != '\0') && response[2] == 'X')
+			return OK_KIM; /*+TX_INFO:1,0*/
+
+		if ((response[0] != '\0') && ( \
+					response[1] == 'K' /*OK*/	|| \
+					response[1] == 'I' /*+ID*/	|| \
+					response[1] == 'S' /*+SN*/	|| \
+					response[1] == 'F' /*+FW*/	|| \
+					response[1] == 'B' /*+BAND*/|| \
+					response[1] == 'F' /*+FRQ*/	|| \
+					response[1] == 'P' /*+PWR*/	|| \
+					response[2] == 'C' /*+TCXOWU*/)
+		) {
+			if (command[4] != 'X') /*AT+TX*/
+				return OK_KIM;
+		} else if (response[0] != '\0' && response[1] == 'R') {/*ERROR*/
 			return ERROR_KIM;
-        }
-		else if (response[0] != '\0'){
+		} else if (response[0] != '\0') {
 			return UNKNOWN_ERROR_KIM;
-        }
-    }
-    return TIMEOUT_KIM;
+		}
+	}
+	return TIMEOUT_KIM;
 }
 
 
